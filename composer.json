@@ -1,7 +1,7 @@
 {
     "name": "reva2/paxum-api",
     "description": "PHP client library for Paxum API",
-    "keywords": ["paxum", ""],
+    "keywords": ["paxum"],
     "type": "library",
     "version": "0.1.0",
     "license": "MIT",
