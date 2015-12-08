@@ -1,8 +1,9 @@
 {
     "name": "reva2/paxum-api",
     "description": "PHP client library for Paxum API",
+    "keywords": ["paxum", ""],
     "type": "library",
-    "version": "dev-master",
+    "version": "0.1.0",
     "license": "MIT",
     "homepage": "https://github.com/reva2/paxum-api",
     "authors": [
@@ -13,6 +14,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
+        "php": ">=5.3.3",
         "guzzle/guzzle": "~3.9"
     },
     "autoload": {
