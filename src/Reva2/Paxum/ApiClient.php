@@ -11,6 +11,7 @@
 namespace Reva2\Paxum;
 
 use Guzzle\Http\Client;
+use Reva2\Paxum\Exception\PaxumException;
 use Reva2\Paxum\Request\AbstractRequest;
 use Reva2\Paxum\Response\ResponseCode;
 
@@ -34,7 +35,7 @@ class ApiClient
      *
      * @var string
      */
-    protected $sharedSecret;
+    protected $sharedSecret = '';
 
     /**
      * Sandbox mode flag
@@ -69,6 +70,48 @@ class ApiClient
         return $this;
     }
 
+    /**
+     * @return boolean
+     */
+    public function isSandbox()
+    {
+        return $this->sandbox;
+    }
+
+    /**
+     * @param boolean $sandbox
+     */
+    public function setSandbox($sandbox)
+    {
+        $this->sandbox = $sandbox;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSandboxResponseCode()
+    {
+        return $this->sandboxResponseCode;
+    }
+
+    /**
+     * @param string $sandboxResponseCode
+     * @return $this
+     */
+    public function setSandboxResponseCode($sandboxResponseCode)
+    {
+        $this->sandboxResponseCode = $sandboxResponseCode;
+
+        return $this;
+    }
+
+    /**
+     * Sends specified request
+     *
+     * @param AbstractRequest $request
+     * @return \SimpleXMLElement
+     * @throws PaxumException
+     */
     public function sendRequest(AbstractRequest $request) {
         try {
             $client = new Client();
@@ -82,9 +125,14 @@ class ApiClient
             }
 
             $response = $client->post($this->apiURL, null, $data)->send();
-
         } catch (\Exception $e) {
+            throw new PaxumException($e->getMessage(), $e->getCode(), $e);
+        }
 
+        if ($response->isSuccessful()) {
+            return $response->xml();
+        } else {
+            throw new PaxumException($response->getReasonPhrase(), $response->getStatusCode());
         }
     }
 }

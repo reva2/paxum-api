@@ -44,4 +44,16 @@ class TransferFundsResponse extends AbstractResponse
 
         return $this;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function fromArray(array $data)
+    {
+        parent::fromArray($data);
+
+        $this->setTransactionId($data['transactionId']);
+
+        return $this;
+    }
 }

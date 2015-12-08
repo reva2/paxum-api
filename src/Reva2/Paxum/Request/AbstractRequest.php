@@ -10,6 +10,9 @@
 
 namespace Reva2\Paxum\Request;
 
+use Reva2\Paxum\ApiClient;
+use Reva2\Paxum\Response\AbstractResponse;
+
 /**
  * Base class for various request to Paxum API
  *
@@ -66,6 +69,20 @@ abstract class AbstractRequest
     }
 
     /**
+     * Send requests and returns API response
+     *
+     * @param ApiClient $apiClient
+     * @return AbstractResponse
+     */
+    public function send(ApiClient $apiClient) {
+        $response = $apiClient->sendRequest($this);
+
+        $data = $this->parseResponseData($response);
+
+        return $this->createResponse($data);
+    }
+
+    /**
      * Returns list of fields required in this type of request
      *
      * @return array
@@ -94,9 +111,34 @@ abstract class AbstractRequest
     }
 
     /**
+     * Parse response data
+     *
+     * @param \SimpleXMLElement $response
+     * @return array
+     */
+    protected function parseResponseData(\SimpleXMLElement $response) {
+        $data = array();
+
+        $data['method'] = (string) $response->Method;
+        $data['code'] = (string) $response->ResponseCode;
+        $data['description'] = (string) $response->ResponseDescription;
+        $data['fee'] = (float) $response->Fee;
+
+        return $data;
+    }
+
+    /**
      * Returns request key parts
      *
      * @return string[]
      */
     abstract protected function getKeyParts();
+
+    /**
+     * Create response object
+     *
+     * @param array $data
+     * @return AbstractResponse
+     */
+    abstract protected function createResponse(array $data);
 }

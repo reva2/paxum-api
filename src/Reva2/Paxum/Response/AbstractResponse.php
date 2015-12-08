@@ -47,6 +47,18 @@ class AbstractResponse
     protected $fee = 0.0;
 
     /**
+     * Constructor
+     *
+     * @param array|null $data
+     */
+    public function __construct(array $data = null)
+    {
+        if (null !== $data) {
+            $this->fromArray($data);
+        }
+    }
+
+    /**
      * @return string
      */
     public function getMethod()
@@ -118,6 +130,22 @@ class AbstractResponse
     public function setFee($fee)
     {
         $this->fee = $fee;
+
+        return $this;
+    }
+
+    /**
+     * Sets object properties from data array
+     *
+     * @param array $data
+     * @return $this
+     */
+    public function fromArray(array $data) {
+        $this
+            ->setMethod($data['method'])
+            ->setCode($data['code'])
+            ->setDescription($data['description'])
+            ->setFee($data['fee']);
 
         return $this;
     }

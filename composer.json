@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Reve2\\Paxum\\" : "src/Reva2/Paxum/"
+            "Reva2\\Paxum\\" : "src/Reva2/Paxum/"
         }
     }
 }

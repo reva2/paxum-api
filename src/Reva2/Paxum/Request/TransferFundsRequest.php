@@ -10,6 +10,9 @@
 
 namespace Reva2\Paxum\Request;
 
+use Reva2\Paxum\Response\AbstractResponse;
+use Reva2\Paxum\Response\TransferFundsResponse;
+
 /**
  * Request to transfer funds end-point.
  *
@@ -303,5 +306,25 @@ class TransferFundsRequest extends AbstractRequest
             $this->businessName,
             $this->reference
         );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function createResponse(array $data)
+    {
+        return new TransferFundsResponse($data);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function parseResponseData(\SimpleXMLElement $response)
+    {
+        $data = parent::parseResponseData($response);
+
+        $data['transactionId'] = (string) $response->TransactionId;
+
+        return $data;
     }
 }
