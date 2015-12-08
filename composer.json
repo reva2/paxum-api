@@ -1,0 +1,23 @@
+{
+    "name": "reva2/paxum-api",
+    "description": "PHP client library for Paxum API",
+    "type": "library",
+    "version": "dev-master",
+    "license": "MIT",
+    "homepage": "https://github.com/reva2/paxum-api",
+    "authors": [
+        {
+            "name": "Sergey Revenko",
+            "email": "dedsemen@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "guzzle/guzzle": "~3.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Reve2\\Paxum\\" : "src/Reva2/Paxum/"
+        }
+    }
+}
