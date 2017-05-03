@@ -130,6 +130,9 @@ class ApiClient
         }
 
         if ($response->isSuccessful()) {
+            // FIX for invalid paxum response
+            $response->setBody(trim((string) $response->getBody(true)));
+
             return $response->xml();
         } else {
             throw new PaxumException($response->getReasonPhrase(), $response->getStatusCode());

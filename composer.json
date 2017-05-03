@@ -3,7 +3,7 @@
     "description": "PHP client library for Paxum API",
     "keywords": ["paxum"],
     "type": "library",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "license": "MIT",
     "homepage": "https://github.com/reva2/paxum-api",
     "authors": [
